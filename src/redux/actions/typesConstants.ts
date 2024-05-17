@@ -1,0 +1,5 @@
+export const GET_EMPLOYEES : string = 'GET_EMPLOYEES'
+export const SET_FETCHED_EMPLOYEES : string = 'SET_FETCHED_EMPLOYEES'
+export const ADD_OR_UPDATE_EMPLOYEE : string= 'ADD_OR_UPDATE_EMPLOYEE'
+export const DELETE_EMPLOYEE : string = 'DELETE_EMPLOYEE'
+export const SET_SELECTED_EMP : string= 'SET_SELECTED_EMP'
