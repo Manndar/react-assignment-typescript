@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect} from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import CustomButton from "../customComp/CustomButton.js";
 import { useNavigate } from "react-router-dom";
@@ -7,12 +7,12 @@ import { setFetchedUsers } from "../redux/actions/actions.ts";
 import axios from "axios";
 import { RootState } from "../redux/store/store.ts";
 import { FetchedEmployees } from "../redux/actions/actions.ts";
-
 function FetchedEmployeesList() {
   const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
-  const fetchUsersFromAPI = useCallback(async () => {
+  const fetchUsersFromAPI = async () => {
     try {
       const response = await axios.get(
         "https://jsonplaceholder.typicode.com/users"
@@ -21,12 +21,12 @@ function FetchedEmployeesList() {
     } catch (error) {
       console.error("Error fetching users:", error);
     }
-  }, [dispatch]);
+  }
 
   useEffect(() => {
     fetchUsersFromAPI();
     console.log('useEffect called ...');
-  }, [fetchUsersFromAPI]);
+  }, []);
 
   const fetchedUsers = useSelector<RootState, FetchedEmployees[] >((state) => state.fetchedUsers);
   

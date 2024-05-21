@@ -13,10 +13,11 @@ const EmployeeForm = () => {
     const dispatch = useDispatch();
 
     const employees = useSelector<RootState, Employee[]>(state => state.employees);
+    console.log('employee', employees);
 
     const [formData, setFormData] = useState({
         empid:  Math.floor(Math.random() * 100) + 1,
-        firstName:  '',
+        firstName:'',
         lastName:'',
         email:  '',
         phoneNumber:  '',
@@ -25,20 +26,12 @@ const EmployeeForm = () => {
 
   useEffect(() => {
     if (typeof id === 'string' && id !== ':id') {
-      const employee : Employee = employees.find((employee) => employee.empid === parseInt(id));
-      // console.log('employee', employee);
-      setFormData({
-        empid:employee.empid,
-        firstName:employee.firstName,
-        lastName:employee.lastName,
-        email:employee.email,
-        phoneNumber:employee.phoneNumber,
-        department:employee.department
-      })
+      const employee: Employee = (employees.find((employee: Employee) => employee.empid === parseInt(id)))!;
+      setFormData(employee);
     }
   },[id, employees])
 
-    const handleOnChange = (e) => {
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name, value} = e.target;
         setFormData({
             ...formData,
@@ -46,7 +39,7 @@ const EmployeeForm = () => {
         })
     }
      
-    const handleSubmit = (e) =>{
+    const handleSubmit = (e: React.FormEvent) =>{
         e.preventDefault();
         dispatch(addOrUpdateEmployee(formData));
         setFormData({
@@ -70,9 +63,10 @@ const EmployeeForm = () => {
         </Typography>
         <CustomButton onClick={onHomeClick}>Home</CustomButton>
         <form >
-          <CustomTextField            
+          <CustomTextField          
             required
             fullWidth
+            type="text"
             id="firstName"
             label="First Name"
             name="firstName"
@@ -82,14 +76,15 @@ const EmployeeForm = () => {
           <CustomTextField            
             required
             fullWidth
+            type="text"
             id="lastName"
             label="Last Name"
             name="lastName"
             value={formData.lastName}
             onChange={handleOnChange}
           />
-          <CustomTextField            
-           
+          <CustomTextField           
+            required            
             fullWidth
             id="email"
             label="Email Address"
@@ -99,11 +94,12 @@ const EmployeeForm = () => {
             onChange={handleOnChange}
           />
           <CustomTextField
-            
+            required={false}
             fullWidth
             id="phoneNumber"
             label="Phone Number"
             name="phoneNumber"
+            type='text'
             value={formData.phoneNumber}
             onChange={handleOnChange}
           />
@@ -112,6 +108,7 @@ const EmployeeForm = () => {
             fullWidth
             id="department"
             label="Department"
+            type='text'
             name="department"
             value={formData.department}
             onChange={handleOnChange}
@@ -124,9 +121,9 @@ const EmployeeForm = () => {
           </CustomButton>
           <hr />
         <CustomButton onClick={() => {
-            navigate(-1);
+            navigate('/display-list');
         }}>
-        Back
+        Go to List
         </CustomButton>
         </form>
       </Grid>
